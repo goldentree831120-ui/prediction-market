@@ -1,7 +1,7 @@
 # Prediction Market & Market Intel Lab
 
-Status: **M1** binary-outcome market, **M2** constant-product pricing and **M3** read-only data
-pipeline (Rust) done. Next: M4 calibration study, M5 news event study, M6 dashboard + note.
+Status: **M1** binary-outcome market, **M2** constant-product pricing, **M3** read-only data
+pipeline (Rust) and **M4** calibration study done. Next: M5 news event study, M6 dashboard + note.
 
 ```bash
 forge test                      # 44 unit/fuzz tests + 9 invariants (market and pool)
@@ -223,4 +223,13 @@ caught; the baseline can't learn from later markets), and `mutation_check.py` pl
 mistakes, including look-ahead, a baseline that sees the whole sample, and a flipped outcome. The
 tests must catch every one; CI runs both.
 
-Results and the write-up: [`analysis/results/`](analysis/results/) and the note below.
+**Results** (3,202 play-money markets created Jan–Jun 2025, 417,387 bets; full write-up in
+[`analysis/FINDINGS.md`](analysis/FINDINGS.md), tables and charts in [`analysis/results/`](analysis/results/)):
+
+- At the midpoint of their lives the markets score a Brier of **0.152** (95% CI 0.145–0.159), against
+  0.25 for "always 50%" and about **42% better** than a base rate learned from earlier markets.
+- Calibration error is small (ECE **0.037**), but **YES is overpriced in all 10 probability bins**, by
+  1–7 percentage points (sign test p ≈ 0.002). Markets priced near 95% resolved YES 89.6% of the time.
+- Accuracy improves toward the end of trading (Brier 0.112 at 30 days, 0.078 at 1 day; different
+  subsets of markets, so indicative only).
+- Play money, one six-month window, markets with 10+ bettors only; no strategy is claimed.
