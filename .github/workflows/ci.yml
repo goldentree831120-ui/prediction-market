@@ -1,0 +1,32 @@
+# CI: contract tests (unit, fuzz, invariants) and the mutation check on every push and pull request.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    name: Market + pool tests and mutation check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      - run: forge --version
+      - run: forge build --sizes
+      - name: forge test (44 unit/fuzz tests + 9 invariants)
+        run: forge test
+      - name: Mutation check (15 planted bugs must all be caught)
+        run: ./script/mutation-check.sh | tee /tmp/mutation.txt && ! grep -qE "SURVIVED|\?\?" /tmp/mutation.txt

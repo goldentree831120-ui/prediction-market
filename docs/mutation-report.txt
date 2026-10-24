@@ -1,0 +1,32 @@
+-- market (M1)
+caught    Invalid pays rounded UP
+          invariants: invariant_collateralCoversOutstandingSets invariant_marketStaysSolvent invariant_noOverpayment invariant_roundingDustIsBounded    unit/fuzz tests failing: 2
+caught    redeemSets burns only YES
+          invariants: invariant_collateralCoversOutstandingSets invariant_marketStaysSolvent invariant_poolNeverRunsDry invariant_roundingDustIsBounded invariant_setsStayPairedUntilFinal    unit/fuzz tests failing: 1
+caught    mint gives 2 YES per collateral
+          invariants: invariant_collateralCoversOutstandingSets invariant_roundingDustIsBounded invariant_setsStayPairedUntilFinal    unit/fuzz tests failing: 31
+caught    redeem does not burn losing tokens
+          invariants: invariant_collateralCoversOutstandingSets invariant_marketStaysSolvent invariant_roundingDustIsBounded    unit/fuzz tests failing: 1
+caught    arbitrate never clears the bond
+          invariants: invariant_collateralCoversOutstandingSets invariant_roundingDustIsBounded    unit/fuzz tests failing: 1
+caught    minting allowed after close
+          invariants: none   unit/fuzz tests failing: 1
+-- pool (M2)
+caught    buy charges no fee
+          invariants: none   unit/fuzz tests failing: 1
+caught    buy rounds the pool's side down
+          invariants: none   unit/fuzz tests failing: 2
+caught    buy pays out 1 wei too much
+          invariants: none   unit/fuzz tests failing: 2
+caught    sell ignores the fee in the curve
+          invariants: none   unit/fuzz tests failing: 1
+caught    joining keeps amounts rounded down
+          invariants: invariant_shareValueNeverDecreases    unit/fuzz tests failing: 0
+caught    leaving rounds in the leaver's favour
+          invariants: invariant_shareValueNeverDecreases    unit/fuzz tests failing: 1
+caught    trading allowed after close
+          invariants: none   unit/fuzz tests failing: 1
+caught    no locked minimum liquidity
+          invariants: none   unit/fuzz tests failing: 2
+caught    price of YES uses the YES reserve
+          invariants: none   unit/fuzz tests failing: 4
