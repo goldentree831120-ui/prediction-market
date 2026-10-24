@@ -191,3 +191,36 @@ The news study (M5) measures how **Manifold probabilities** move around public n
 **Main limitation: Manifold uses play money (mana).** Traders have less at stake than on
 real-money markets, so results describe play-money markets and may not carry over to real-money
 ones.
+
+## M4: calibration study (`analysis/`, Python)
+
+When these markets said 70%, did the event happen about 70% of the time?
+
+```bash
+cd analysis && ./run.sh          # sets up analysis/.venv on first use, runs the tests, then the study
+```
+
+**Method.** The price just before resolution is nearly useless to score: by then the answer is often
+known (a "will X happen by date D" market resolves YES the moment X happens). So each market's
+probability is taken at moments fixed in advance, using only bets made at or before that moment:
+
+| Snapshot | When |
+|---|---|
+| `open` | the opening probability, set by the market's creator before any trading |
+| `mid` (main result) | halfway between creation and the end of trading |
+| `30d`, `7d`, `1d` | 30, 7 and 1 day(s) before trading ended; only markets that traded that long |
+
+For each snapshot: the Brier score with a bootstrap 95% CI (2000 resamples, fixed seed); log loss;
+two naive baselines: "always 50%" (Brier 0.25) and "always the base rate", where the base rate is
+learned only from the markets that ended **earlier** and scored on the later half, so the baseline
+can't see the future; a reliability table (10 bins, Wilson 95% CIs, number of markets per bin);
+expected calibration error; and the Murphy decomposition (reliability, resolution, uncertainty).
+Breakdowns by number of bettors and by trading lifetime.
+
+**Checks.** 13 tests on hand-built data with known answers (a bet made after a snapshot is never
+used; a perfectly calibrated synthetic forecaster scores as calibrated; an overconfident one is
+caught; the baseline can't learn from later markets), and `mutation_check.py` plants 8 classic
+mistakes, including look-ahead, a baseline that sees the whole sample, and a flipped outcome. The
+tests must catch every one; CI runs both.
+
+Results and the write-up: [`analysis/results/`](analysis/results/) and the note below.

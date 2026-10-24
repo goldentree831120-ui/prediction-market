@@ -1,4 +1,4 @@
-# CI: contract tests, the mutation check and the Rust data fetcher on every push and pull request.
+# CI: contract tests, mutation checks, the Rust data fetcher and the calibration analysis on every push and pull request.
 name: CI
 
 on:
@@ -45,3 +45,20 @@ jobs:
       - run: cargo clippy --all-targets --locked -- -D warnings
       - name: cargo test (recorded fixtures + a local test server)
         run: cargo test --locked
+
+  analysis:
+    name: Calibration analysis (tests + mutation check; synthetic data only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: analysis
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests
+      - name: Mutation check (8 planted analysis mistakes must all be caught)
+        run: python mutation_check.py
