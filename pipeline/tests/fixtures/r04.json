@@ -1,0 +1,42 @@
+[
+ {
+  "id": "b3",
+  "contractId": "m6",
+  "userId": "u2",
+  "createdTime": 1743465600300,
+  "amount": 10,
+  "shares": 15.2,
+  "outcome": "NO",
+  "probBefore": 0.4,
+  "probAfter": 0.35,
+  "isFilled": true,
+  "isCancelled": false,
+  "fees": {
+   "creatorFee": 0,
+   "platformFee": 0,
+   "liquidityFee": 0
+  },
+  "loanAmount": 0,
+  "visibility": "public"
+ },
+ {
+  "id": "b2",
+  "contractId": "m6",
+  "userId": "u2",
+  "createdTime": 1743465600200,
+  "amount": 10,
+  "shares": 15.2,
+  "outcome": "YES",
+  "probBefore": 0.5,
+  "probAfter": 1.7,
+  "isFilled": true,
+  "isCancelled": false,
+  "fees": {
+   "creatorFee": 0,
+   "platformFee": 0,
+   "liquidityFee": 0
+  },
+  "loanAmount": 0,
+  "visibility": "public"
+ }
+]

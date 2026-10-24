@@ -1,0 +1,9 @@
+{
+ "/v0/markets?limit=2&sort=created-time&order=desc": "r00.json",
+ "/v0/markets?limit=2&sort=created-time&order=desc&before=m7": "r01.json",
+ "/v0/markets?limit=2&sort=created-time&order=desc&before=m5": "r02.json",
+ "/v0/markets?limit=2&sort=created-time&order=desc&before=m3": "r03.json",
+ "/v0/bets?contractId=m6&limit=2": "r04.json",
+ "/v0/bets?contractId=m6&limit=2&before=b2": "r05.json",
+ "/v0/bets?contractId=m8&limit=2": "r06.json"
+}

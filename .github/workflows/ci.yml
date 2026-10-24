@@ -1,4 +1,4 @@
-# CI: contract tests (unit, fuzz, invariants) and the mutation check on every push and pull request.
+# CI: contract tests, the mutation check and the Rust data fetcher on every push and pull request.
 name: CI
 
 on:
@@ -30,3 +30,18 @@ jobs:
         run: forge test
       - name: Mutation check (15 planted bugs must all be caught)
         run: ./script/mutation-check.sh | tee /tmp/mutation.txt && ! grep -qE "SURVIVED|\?\?" /tmp/mutation.txt
+
+  pipeline:
+    name: Rust data fetcher (fmt, clippy, tests; never calls the live API)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal --component clippy,rustfmt && rustup default stable
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
+      - name: cargo test (recorded fixtures + a local test server)
+        run: cargo test --locked

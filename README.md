@@ -1,12 +1,14 @@
 # Prediction Market & Market Intel Lab
 
-Status: **M1** binary-outcome market and **M2** constant-product pricing done. Next: M3
-read-only data pipeline, M4 calibration study, M5 news event study, M6 dashboard + note.
+Status: **M1** binary-outcome market, **M2** constant-product pricing and **M3** read-only data
+pipeline (Rust) done. Next: M4 calibration study, M5 news event study, M6 dashboard + note.
 
 ```bash
 forge test                      # 44 unit/fuzz tests + 9 invariants (market and pool)
 forge test -vv --match-test tradeoff   # prints the LP trade-off numbers quoted below
 ./script/mutation-check.sh      # plants 15 bugs (6 market, 9 pool); the suite must catch each
+(cd pipeline && cargo test)     # data fetcher tests (recorded fixtures; no network)
+(cd pipeline && ./run.sh)       # fetch the dataset from Manifold's public API (read-only, no key)
 ```
 (OpenZeppelin v5.1.0 and forge-std are included in `lib/`. On Windows use WSL or Git Bash.)
 
@@ -128,3 +130,64 @@ after close, the full lifecycle through redemption, and fee-on-transfer collater
 - Trading needs standard ERC-20 collateral; fee-on-transfer tokens can provide liquidity but not trade.
 - The pool's price is only as good as the trading in it: M4 measures how well real prediction
   markets' prices match outcomes.
+
+## M3: data pipeline (`pipeline/`, Rust)
+
+`pm-fetch` collects resolved yes/no prediction markets and the full trading history of each,
+for the calibration study (M4) and the news study (M5).
+
+```bash
+cd pipeline
+./run.sh                                  # default: markets created 2025-01-01 .. 2025-07-01
+./run.sh --since 2024-07-01 --until 2025-07-01 --min-bettors 20
+./run.sh --clean                          # delete cached and derived data, rebuild from scratch
+```
+
+Output in `pipeline/data/clean/`:
+- `markets.csv`: one row per market: question, created / close / resolution times, resolution
+  (YES or NO), unique bettors, volume, liquidity, number of bets.
+- `bets.csv`: every bet, oldest first: time, outcome, amount, and the market probability
+  **before and after** it. That gives each market's probability over time.
+- `manifest.json`: the selection rules, how many markets were seen, kept, and excluded **for each
+  reason** (not binary, unresolved, resolved to a probability, cancelled, too few bettors, ...),
+  bets dropped for impossible probabilities, any market whose history was cut short, the number of
+  requests made, and SHA-256 hashes of both CSV files.
+
+**How it behaves:**
+- GET requests only, no API key, no account. A descriptive User-Agent with the repository link.
+- At most 4 requests a second, half of Manifold's documented 500 per minute, with backoff on
+  HTTP 429 and 5xx (honouring `Retry-After`).
+- Every raw response is cached on disk with its URL and fetch time, so reruns are fast and give
+  identical results, and every number can be traced back to a response. `--refresh` refetches;
+  `--offline` never touches the network.
+- If more markets qualify than `--max-markets` (default 1500), a deterministic pseudo-random sample
+  is taken (by a hash of the market id), so it spreads over the whole window instead of favouring
+  the oldest or newest markets. The manifest records that the cap was hit.
+- The data are **not committed** to this repository (`data/` is git-ignored). Anyone can rebuild
+  them with `./run.sh`.
+
+**Tests** (`cargo test`, also in CI): paging stops at the window and at the page cap; every
+excluded market is counted under exactly one reason; bets come back oldest first across pages;
+truncated histories are reported; invalid probabilities are dropped and counted; the CSV and
+manifest contents; and the HTTP layer against a local test server: GET only, caching, offline
+mode, retry after a 429, and request spacing. The tests use recorded responses shaped like the
+documented API types, so CI never calls Manifold.
+
+### Data sources and terms
+
+Checked before writing any code (October 2026). Not legal advice.
+
+| Source | Decision | Reason (from the source's own terms) |
+|---|---|---|
+| **Manifold Markets** API | ✅ used | read endpoints need no key; the API docs allow academic, personal and non-commercial use; limit 500 requests/min per IP |
+| Polymarket | ❌ not used | Terms of Use prohibit "data mining tools, robots, crawlers, or similar data gathering and extraction tools" and copying material without prior written consent |
+| Kraken | ❌ not used | Terms of Service allow use "only for your own benefit", prohibit scraping, bots and scripts, and making content available to third parties; other uses need permission (marketdata@kraken.com) |
+| Coinbase Exchange | ❌ not used | Market Data Terms prohibit sharing derived works (charts, analytics, research) outside your organisation without consent |
+| Kalshi | ❌ not used | Data Terms allow personal non-commercial use only and prohibit publishing, derivative works and systematic retrieval |
+
+The consequence: this project has no exchange price data, and the brief's ccxt step was dropped.
+The news study (M5) measures how **Manifold probabilities** move around public news instead.
+
+**Main limitation: Manifold uses play money (mana).** Traders have less at stake than on
+real-money markets, so results describe play-money markets and may not carry over to real-money
+ones.

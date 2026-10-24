@@ -1,0 +1,54 @@
+[
+ {
+  "id": "m4",
+  "creatorId": "u1",
+  "creatorUsername": "alice",
+  "creatorName": "Alice",
+  "createdTime": 1740787200000,
+  "closeTime": 1741651200000,
+  "question": "Question m4?",
+  "url": "https://manifold.markets/alice/q-m4",
+  "outcomeType": "BINARY",
+  "mechanism": "cpmm-1",
+  "probability": 0.6,
+  "pool": {
+   "YES": 100,
+   "NO": 80
+  },
+  "p": 0.5,
+  "totalLiquidity": 100,
+  "volume": 1234.5,
+  "volume24Hours": 0,
+  "isResolved": true,
+  "uniqueBettorCount": 20,
+  "lastUpdatedTime": 1740787201000,
+  "resolution": "CANCEL",
+  "resolutionTime": 1741737600000
+ },
+ {
+  "id": "m3",
+  "creatorId": "u1",
+  "creatorUsername": "alice",
+  "creatorName": "Alice",
+  "createdTime": 1740787199999,
+  "closeTime": 1741651199999,
+  "question": "Question m3?",
+  "url": "https://manifold.markets/alice/q-m3",
+  "outcomeType": "BINARY",
+  "mechanism": "cpmm-1",
+  "probability": 0.6,
+  "pool": {
+   "YES": 100,
+   "NO": 80
+  },
+  "p": 0.5,
+  "totalLiquidity": 100,
+  "volume": 1234.5,
+  "volume24Hours": 0,
+  "isResolved": true,
+  "uniqueBettorCount": 3,
+  "lastUpdatedTime": 1740787200999,
+  "resolution": "YES",
+  "resolutionTime": 1741737599999
+ }
+]

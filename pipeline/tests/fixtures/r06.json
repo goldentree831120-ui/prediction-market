@@ -1,0 +1,22 @@
+[
+ {
+  "id": "c1",
+  "contractId": "m8",
+  "userId": "u2",
+  "createdTime": 1746057600050,
+  "amount": 10,
+  "shares": 15.2,
+  "outcome": "YES",
+  "probBefore": 0.5,
+  "probAfter": 0.62,
+  "isFilled": true,
+  "isCancelled": false,
+  "fees": {
+   "creatorFee": 0,
+   "platformFee": 0,
+   "liquidityFee": 0
+  },
+  "loanAmount": 0,
+  "visibility": "public"
+ }
+]
