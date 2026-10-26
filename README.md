@@ -233,3 +233,41 @@ tests must catch every one; CI runs both.
 - Accuracy improves toward the end of trading (Brier 0.112 at 30 days, 0.078 at 1 day; different
   subsets of markets, so indicative only).
 - Play money, one six-month window, markets with 10+ bettors only; no strategy is claimed.
+
+## M5: news event study (`analysis/`, Python)
+
+Do Manifold probabilities move when the news does, and do they move **before** it?
+
+```bash
+cd analysis && ./run_news.sh --limit 1   # quick check: one market's news from GDELT
+cd analysis && ./run_news.sh             # all 49 markets (one request each, cached), then the study
+```
+
+**Markets.** 49 hand-picked markets from the M3 sample ([`analysis/news/markets.csv`](analysis/news/markets.csv)),
+each clearly about a news event (wars and ceasefires, tariffs, court cases, elections, launches),
+across 15 topics, each with a hand-written news search. Price-driven (Bitcoin, stocks), poll-driven
+and personal or joke markets were left out.
+
+**News.** Daily counts of English-language articles matching each search, from the
+[GDELT Project](https://www.gdeltproject.org) DOC 2.0 API (free to use with citation), for each
+market's last 90 days of trading plus two weeks before for the baseline: one request per market,
+at least 10 s apart, cached, with backoff; no key. (Hourly counts were tried first; they need a
+request per week of data, about 400 in all, and GDELT refused nearly all of them with HTTP 429.)
+
+**Method (rules fixed before the run, in `news_study.py`).** A *news-spike day* has at least 20
+matching articles and at least 3× the median of the previous 14 days; spike days within 2 days of
+a kept one are the same story. The *reaction* is how far the probability moved from 00:00 UTC on
+the spike day to two days later; the *lead* is how far it moved in the two days before. Both are
+compared with *normal days* in the same market (more than 2 days from any spike) using a one-sided
+permutation test, then Benjamini–Hochberg across markets (q = 0.10). Markets on the same topic
+share news, so the pooled effect is averaged over topics, with a bootstrap over topics.
+
+**Checks.** 20 more tests (spike rule, no look-ahead in the baseline, gaps in the data, de-duplication,
+BH on a known example, a synthetic market that reacts to news is detected, and markets that don't
+are flagged at about the 5% chance rate, the fetcher's caching, backoff, zero-filling and refusal
+to cache GDELT error messages), and 11 more planted mistakes in the mutation check (19 in total).
+
+**Limits, stated up front.** 49 markets is a small, hand-picked sample, and markets that traded only
+a few days can't be tested; news searches are imperfect; article counts measure coverage, not
+importance; daily counts can't say whether the news came before or after a move within the same
+day; and this describes how play-money prices behave around news. It is not a trading strategy.

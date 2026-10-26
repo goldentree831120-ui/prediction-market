@@ -1,4 +1,4 @@
-# CI: contract tests, mutation checks, the Rust data fetcher and the calibration analysis on every push and pull request.
+# CI: contract tests, mutation checks, the Rust data fetcher and the calibration + news analysis on every push and pull request.
 name: CI
 
 on:
@@ -47,7 +47,7 @@ jobs:
         run: cargo test --locked
 
   analysis:
-    name: Calibration analysis (tests + mutation check; synthetic data only)
+    name: Calibration + news analysis (tests + mutation check; synthetic data only, no network)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     defaults:
@@ -60,5 +60,5 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python -m pytest -q tests
-      - name: Mutation check (8 planted analysis mistakes must all be caught)
+      - name: Mutation check (19 planted analysis mistakes must all be caught)
         run: python mutation_check.py

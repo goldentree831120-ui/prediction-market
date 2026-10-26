@@ -1,0 +1,50 @@
+id,topic,question,created,end,unique_bettors,resolution,gdelt_query
+2SA2SUCPI2,iran-war,Will America bomb Iran in 2025?,2025-03-30,2025-06-22,723,YES,"Iran (airstrike OR airstrikes OR bombing OR ""strike Iran"" OR ""strikes on Iran"") American"
+Sc5CE2EQzU,iran-war,🇮🇱Israel-Iran🇮🇷 war ends before July 2025?,2025-06-22,2025-06-30,349,YES,Israel Iran ceasefire
+sLy0ugLt2E,iran-war,Will Fordow be put out of commission by the end ofJuly? (Israel-Iran Conflict),2025-06-14,2025-07-31,236,YES,Fordow
+hLsCtCAOhq,india-pakistan,India launches military operation in Pakistan by end of May?,2025-04-29,2025-05-06,50,YES,"India Pakistan (strike OR strikes OR military OR ""Operation Sindoor"")"
+A8cyOElAg5,pope,Will Pope Leo XIV openly criticize Trump in 2025?,2025-05-08,2025-12-10,343,YES,Pope Leo Trump
+gyPtUSqdt9,pope,Will Pope Francis live to see Easter Sunday?,2025-02-24,2025-04-19,84,YES,Pope Francis (health OR hospital OR pneumonia)
+N9t6htRp6p,pope,New Pope announced before May 18?,2025-04-22,2025-05-08,50,YES,conclave pope
+dO9NA9Eq6g,musk-trump,Will Elon Musk cease to be an advisor to Donald Trump and face public criticism from Donald Trump before 2026?,2025-01-22,2025-06-06,313,YES,"Musk Trump (feud OR rift OR leaving OR ""steps down"")"
+cI9O2UsgOQ,musk-trump,Will Elon Musk create a political party in 2025?,2025-06-05,2025-12-31,1047,NO,"Musk (""political party"" OR ""America Party"")"
+Pulc8uNPhc,tariffs,Will Trump announce a new tariff pause by April 9th?,2025-04-07,2025-04-09,67,YES,tariffs (pause OR paused OR suspend)
+qLP0EQLl80,tariffs,"Trump imposes new tariffs on Canada by EOD February 1st, 2025",2025-01-27,2025-02-01,90,YES,Canada tariffs Trump
+RsSCup9y9l,tariffs,Will Apple be exempt from the U.S. tariffs on China by the end of April?,2025-04-09,2025-04-30,210,NO,Apple tariffs (exemption OR exempt OR iPhone)
+pcpdncUhOZ,tariffs,US and China reach trade agreement reducing tariffs below 100% by April?,2025-04-11,2025-05-01,56,NO,China tariffs (deal OR talks OR agreement)
+tZI2qhgggC,tariffs,50% tariff goes into effect on EU by June 1?,2025-05-23,2025-06-01,49,NO,European Union tariffs Trump
+dSEnptC6pE,ai-labs,Will Anthropic release Claude 4 this week?,2025-05-19,2025-05-22,262,YES,Anthropic Claude
+ISApEyZ6Et,ai-labs,Will Anthropic release a reasoning model before March 2025?,2025-01-28,2025-02-24,120,YES,Anthropic Claude
+tQ05qqgyPL,ai-labs,"GPT-5 launches before July 31, 2025?",2025-06-20,2025-07-30,85,NO,"(GPT5 OR ""GPT 5"") OpenAI"
+q2yRlgPUAL,us-congress,Big Beautiful Bill passes Senate?,2025-05-24,2025-07-02,60,YES,Big Beautiful Bill Senate
+U9t2CLCEsU,us-congress,Will the U.S. Government experience a shutdown in February or March of 2025?,2025-02-18,2025-03-29,55,NO,government shutdown
+ApZ0tN5Qy8,us-congress,Will Bernie Sanders vote Yes to confirm Tulsi Gabbard?,2025-01-15,2025-02-25,49,NO,Gabbard confirmation
+C9Rp92NCUt,gaza,Will Israel and Hamas agree to a ceasefire deal before Trump’s inauguration?,2025-01-14,2025-01-18,137,YES,Gaza ceasefire hostage
+2QgRCnRsPn,gaza,Will the Israel-Hamas ceasefire extend into Phase 2?,2025-01-17,2025-03-18,65,NO,"Gaza ceasefire (""phase two"" OR ""second phase"" OR ""phase 2"")"
+Q8h5EunUPl,gaza,Will Israel attack Greta Thunberg's ship?,2025-06-03,2025-06-09,420,NO,(Madleen OR Thunberg) Gaza
+LzNPu2zQLS,ukraine,Will Trump sign a deal with Ukraine providing military support in exchange for rare earths by the end of 2025?,2025-02-15,2026-01-01,234,YES,Ukraine minerals deal
+AppIq82IcA,ukraine,Will President Zelenskyy apologize to President Trump by the end of March 2025?,2025-03-01,2025-04-01,253,NO,"Zelensky Trump (apology OR apologize OR ""Oval Office"")"
+cLQNUtU8IQ,ukraine,Will Russia agree with the current US-Ukrainian negotiated ceasefire?,2025-03-12,2025-03-18,69,NO,Putin ceasefire Ukraine
+IdcUZyCRpR,ukraine,Will Trump meet in person with Putin in 2025?,2025-01-04,2025-08-20,62,YES,Trump Putin (meeting OR summit)
+CsUndQgNsz,us-courts,A member of the Trump administration will be held in contempt of court.,2025-03-18,2025-04-17,249,NO,contempt Trump administration judge
+9LCl2QUOnE,us-courts,Kilmar Armando Abrego Garcia confirmed alive on or before May 6?,2025-04-14,2025-04-18,104,YES,Abrego Garcia
+2LPPzzURqu,us-courts,Will courts overturn Trump’s executive order on birthright citizenship?,2025-01-25,2026-06-30,80,YES,birthright citizenship
+9LQ6qh8n5L,us-cabinet,Will anyone in the leaked Houthi War chat be fired/resign over it by the end of April?,2025-03-24,2025-04-30,205,NO,Signal chat (Waltz OR Hegseth OR Houthi)
+zEUsyztpQ2,us-cabinet,Will Pete Hegseth resign as US Secretary of Defense before the end of July 2025?,2025-03-25,2025-07-31,143,NO,Hegseth (resign OR resignation OR fired)
+O26QI5ztgA,us-cabinet,Will president Trump fire Jerome Powell before EOY 2025?,2025-04-11,2025-12-31,63,NO,Powell Trump (fire OR firing OR remove)
+hNZ9Sc2ANP,us-agencies,Will Trump issue an executive order in February to shut down the Department of Education?,2025-01-31,2025-02-08,63,NO,"""Education Department"" (dismantle OR abolish OR ""executive order"")"
+UyuZpIzR9g,us-agencies,At least 5% of federal workers accept Trump administration buyout offer by February 6th 2025,2025-01-30,2025-02-07,56,NO,"(""deferred resignation"" OR buyout) federal workers"
+O6zScChdQO,us-agencies,Will USAID cease to exist as a government agency within 3 months of the Trump administration?,2025-02-07,2025-04-21,51,NO,USAID
+LZqRChOl9P,us-other,Will Biden pardon anyone in his final two days in office?,2025-01-15,2025-01-20,65,YES,Biden pardon
+hhhILQZsNZ,us-other,Trump declassifies JFK files in first 100 days?,2025-01-04,2025-03-29,56,YES,JFK files
+P2Uy69OddN,us-other,"Will Google Maps display ""Gulf of America"" in place of ""Gulf of Mexico"" before 2026?",2025-01-20,2025-02-11,382,YES,Google Gulf America (rename OR renamed OR renaming)
+yIs26sZ6I2,us-other,"Will Trump tour any areas damaged by the Los Angeles fires before February 1, 2025?",2025-01-12,2025-01-25,53,YES,"Trump ""Los Angeles"" fires visit"
+dd6P0IyLAR,us-other,Will TikTok be banned in the United States for the majority of the population by the end of 2025?,2025-01-04,2025-01-30,53,YES,TikTok ban
+hLPEyRA8AU,elections,Will the AfD receive >= 20% of votes in the 2025 German federal election?,2025-01-13,2025-02-26,79,YES,AfD election
+qp2l2sUOs9,elections,Will Mark Carney be the Prime Minister after the election in Canada?,2025-04-08,2025-04-28,76,YES,Carney election
+0A0ZzNhg9s,elections,Adam Bandt loses seat of Melbourne?,2025-05-03,2025-05-07,51,YES,Adam Bandt
+qlP60nQSpg,elections,Poilievre resigns as CPC leader by end of May?,2025-04-29,2025-05-31,98,NO,Poilievre (resign OR leadership OR seat)
+pPRdNAZ22Z,other,Will the super heavy booster for Starship Flight 7 be caught?,2025-01-10,2025-01-17,54,YES,Starship booster
+CC0OpqEdzl,other,First confirmed human-to-human H5N1 transmission by May 1st 2025,2025-01-07,2025-05-02,69,NO,H5N1 human
+5zqPz5ALQC,other,Will a stock market circuit breaker halt trading in the U.S. within the next week?,2025-04-04,2025-04-11,278,NO,circuit breaker stock market
+ZlRUhACOU0,other,Nintendo increases recommend US retail price of Switch 2 above the announced $449.99 before launch,2025-04-02,2025-06-05,104,NO,Nintendo Switch price
