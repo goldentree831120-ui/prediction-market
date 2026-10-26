@@ -1,7 +1,7 @@
 # Prediction Market & Market Intel Lab
 
 Status: **M1** binary-outcome market, **M2** constant-product pricing, **M3** read-only data
-pipeline (Rust) and **M4** calibration study done. Next: M5 news event study, M6 dashboard + note.
+pipeline (Rust), **M4** calibration study and **M5** news event study done. Next: M6 dashboard + note.
 
 ```bash
 forge test                      # 44 unit/fuzz tests + 9 invariants (market and pool)
@@ -266,6 +266,15 @@ share news, so the pooled effect is averaged over topics, with a bootstrap over 
 BH on a known example, a synthetic market that reacts to news is detected, and markets that don't
 are flagged at about the 5% chance rate, the fetcher's caching, backoff, zero-filling and refusal
 to cache GDELT error messages), and 11 more planted mistakes in the mutation check (19 in total).
+
+**Results** (24 of 49 markets testable, 142 news-spike days; full write-up in
+[`analysis/NEWS_FINDINGS.md`](analysis/NEWS_FINDINGS.md), table and chart in [`analysis/results/`](analysis/results/)):
+
+- Over a news-spike day and the day after, probabilities moved **3.1 points** more than over ordinary
+  days (mean over 13 topics, 95% CI −0.1 to 8.1); significant in **9 of 24** markets after BH.
+- They moved about as much in the **two days before** a spike (**4.0 points**, CI 0.5 to 8.5; 7 of 24
+  significant). Daily coverage peaks seem to lag the events traders react to, so this shows prices
+  and coverage moving together, not which comes first.
 
 **Limits, stated up front.** 49 markets is a small, hand-picked sample, and markets that traded only
 a few days can't be tested; news searches are imperfect; article counts measure coverage, not

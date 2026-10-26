@@ -244,18 +244,22 @@ def markdown(res: dict) -> str:
                 f"(mean over {r['topics']} topics, 95% CI {pp(r['ci'][0])} to {pp(r['ci'][1])}); larger in "
                 f"{r['markets_positive']}/{r['markets']} markets; significant after Benjamini-Hochberg (q={Q}): {r['bh_significant']}."
             )
-    lines += ["", "| Market | Topic | Spike days | Move from news day | Normal 2-day move | p | BH | Move before news | p |", "|---|---|---|---|---|---|---|---|---|"]
+    lines += ["", "| Market | Topic | Spike days | Move from news day | Normal 2-day move | p | BH | Move before news | p | BH |", "|---|---|---|---|---|---|---|---|---|---|"]
     t = df[df["reaction_p"].notna()].sort_values("reaction_p")
     for r in t.itertuples():
         q = r.question if len(r.question) <= 60 else r.question[:57] + "..."
         lines.append(
-            f"| {q} | {r.topic} | {r.spikes} | {pp(r.reaction_after_news)} | {pp(r.reaction_normal)} | {r.reaction_p:.3f} | "
-            f"{'yes' if r.reaction_bh else ''} | {pp(r.lead_before_news)} | {r.lead_p:.3f} |"
+            f"| {q} | {r.topic} | {int(r.spikes)} | {pp(r.reaction_after_news)} | {pp(r.reaction_normal)} | {_p(r.reaction_p)} | "
+            f"{'yes' if r.reaction_bh else ''} | {pp(r.lead_before_news)} | {_p(r.lead_p)} | {'yes' if r.lead_bh else ''} |"
         )
     if s["not_tested"]:
         lines += ["", "Not tested: " + "; ".join(f"{x['id']} ({x['note']})" for x in s["not_tested"])]
     lines += ["", "Moves are absolute changes in the YES probability, in percentage points."]
     return "\n".join(lines) + "\n"
+
+
+def _p(x: float) -> str:
+    return "<0.001" if x < 0.001 else f"{x:.3f}"
 
 
 def plot(res: dict, out: Path) -> None:
