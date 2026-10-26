@@ -26,7 +26,7 @@ jobs:
           version: stable
       - run: forge --version
       - run: forge build --sizes
-      - name: forge test (44 unit/fuzz tests + 9 invariants)
+      - name: forge test (46 unit/fuzz tests incl. pool vectors shared with the dashboard + 9 invariants)
         run: forge test
       - name: Mutation check (15 planted bugs must all be caught)
         run: ./script/mutation-check.sh | tee /tmp/mutation.txt && ! grep -qE "SURVIVED|\?\?" /tmp/mutation.txt
@@ -47,7 +47,7 @@ jobs:
         run: cargo test --locked
 
   analysis:
-    name: Calibration + news analysis (tests + mutation check; synthetic data only, no network)
+    name: Analysis + dashboard (tests + mutation check; synthetic data only, no network)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     defaults:
@@ -60,5 +60,5 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python -m pytest -q tests
-      - name: Mutation check (19 planted analysis mistakes must all be caught)
+      - name: Mutation check (22 planted analysis mistakes must all be caught)
         run: python mutation_check.py

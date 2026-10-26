@@ -1,14 +1,18 @@
 # Prediction Market & Market Intel Lab
 
-Status: **M1** binary-outcome market, **M2** constant-product pricing, **M3** read-only data
-pipeline (Rust), **M4** calibration study and **M5** news event study done. Next: M6 dashboard + note.
+Status: complete. **M1** binary-outcome market, **M2** constant-product pricing, **M3** read-only
+data pipeline (Rust), **M4** calibration study, **M5** news event study, **M6** local dashboard and
+[project note](NOTE.md).
 
 ```bash
-forge test                      # 44 unit/fuzz tests + 9 invariants (market and pool)
+forge test                      # 46 unit/fuzz tests + 9 invariants (market and pool)
 forge test -vv --match-test tradeoff   # prints the LP trade-off numbers quoted below
 ./script/mutation-check.sh      # plants 15 bugs (6 market, 9 pool); the suite must catch each
 (cd pipeline && cargo test)     # data fetcher tests (recorded fixtures; no network)
 (cd pipeline && ./run.sh)       # fetch the dataset from Manifold's public API (read-only, no key)
+(cd analysis && ./run.sh)       # M4 calibration study
+(cd analysis && ./run_news.sh)  # M5 news study
+(cd analysis && ./run_dashboard.sh)   # M6 dashboard at http://localhost:8501
 ```
 (OpenZeppelin v5.1.0 and forge-std are included in `lib/`. On Windows use WSL or Git Bash.)
 
@@ -280,3 +284,32 @@ to cache GDELT error messages), and 11 more planted mistakes in the mutation che
 a few days can't be tested; news searches are imperfect; article counts measure coverage, not
 importance; daily counts can't say whether the news came before or after a move within the same
 day; and this describes how play-money prices behave around news. It is not a trading strategy.
+
+## M6: dashboard (`analysis/dashboard.py`, Streamlit) and project note
+
+```bash
+cd analysis && ./run_dashboard.sh   # http://localhost:8501, Ctrl+C to stop
+```
+
+Four tabs, all read from files on this machine; the dashboard makes no network calls of its own,
+sends no usage statistics (`analysis/.streamlit/config.toml`) and listens on localhost only.
+
+| Tab | Shows |
+|---|---|
+| Calibration (M4) | reliability chart with Wilson intervals for any snapshot, Brier/ECE/skill, all snapshots, breakdowns |
+| News study (M5) | pooled effects, the per-market table with BH flags, why markets weren't tested, and one market's probability against its daily news coverage with spike days marked |
+| Pool calculator (M2) | a trade's tokens out, average price, fee and price impact, using the pool's exact integer maths |
+| About | data sources, terms, limits |
+
+The two committed result files (`analysis/results/*.json`) are enough for most of it; the
+per-market chart also needs the local-only data from M3 and M5 and says so when it's missing.
+
+**Checks.** The calculator's Python copy of the pool maths (`analysis/pool.py`) and the contract
+are tested against the **same hard-coded quotes** (`test/PoolVectors.t.sol`,
+`analysis/tests/test_pool.py`), so the two can't drift apart. Dashboard tests run the real app
+headless on synthetic results, with and without local data, and check a bad input shows a
+warning instead of crashing (they caught a crash when every market was tested). Three more
+planted mistakes in the mutation check (22 in total).
+
+**[NOTE.md](NOTE.md)** is the short write-up for the whole project: what worked, what didn't.
+

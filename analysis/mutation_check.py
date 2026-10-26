@@ -45,6 +45,10 @@ MUTATIONS = [
     ("news_study.py", "lead window actually looks after the news", "np.abs(p(t) - p(t - WINDOW_D * STEP))", "np.abs(p(t + WINDOW_D * STEP) - p(t))"),
     ("news_fetch.py", "days with no articles dropped instead of counted as zero", "v, n = have.get(t, (0, 0))\n            rows.append((p.id, t, v, n))", "if t in have:\n                rows.append((p.id, t, *have[t]))"),
     ("news_fetch.py", "the day trading ended is not fetched", "hi = end_ms - end_ms % DAY_MS + DAY_MS", "hi = end_ms - end_ms % DAY_MS"),
+    # --- M6 dashboard: the pool calculator must match the contract ---------------------
+    ("pool.py", "buy fee rounded down instead of up", "fee = mul_div(collateral_in, self.fee_bps, BPS, ceil=True)", "fee = mul_div(collateral_in, self.fee_bps, BPS)"),
+    ("pool.py", "pool reserve after a buy rounded down (pool loses dust)", "new_buy_r = mul_div(buy_r, other_r, other_r + invest, ceil=True)", "new_buy_r = mul_div(buy_r, other_r, other_r + invest)"),
+    ("dashboard_data.py", "per-market chart uses the bet AFTER each day starts", 'i = np.searchsorted(t, days, side="right") - 1', 'i = np.searchsorted(t, days, side="right")'),
     ("news_fetch.py", "GDELT error messages cached as data", "parse_timeline(text)  # raises on an error message, which is then NOT cached", "path.write_text(text)"),
 ]
 
